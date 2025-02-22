@@ -58,7 +58,7 @@ if __name__ == "__main__":
                             blacklist_channels=config["blacklist"])
     crop_input_size = config["crop_input_size"] if "crop_input_size" in config else 100
     val_dataset = CellCropsDataset(val_crops, transform=val_transform(crop_input_size), mask=True)
-    device = "cuda"
+    device = "cpu"
     num_channels = sum(1 for line in open(config["channels_path"])) + 1 - len(config["blacklist"])
     class_num = config["num_classes"]
 
@@ -68,7 +68,7 @@ if __name__ == "__main__":
     model = model.to(device=device)
 
     val_loader = DataLoader(val_dataset, batch_size=config["batch_size"],
-                            num_workers=config["num_workers"], shuffle=False, pin_memory=True)
+                            num_workers=config["num_workers"], shuffle=False, pin_memory=False)
     cells, results = val_epoch(model, val_loader, device=device)
 
     metrics = Metrics(

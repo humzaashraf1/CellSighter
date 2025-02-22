@@ -13,7 +13,11 @@ from torch.utils.data import DataLoader, WeightedRandomSampler
 import json
 from metrics.metrics import Metrics
 from eval import val_epoch
-
+print()
+if torch.cuda.is_available():
+    print("GPU Available")
+else:
+    print("GPU Not Available")
 
 def train_epoch(model, dataloader, optimizer, criterion, epoch, writer, device=None):
     model.train()
@@ -133,7 +137,7 @@ if __name__ == "__main__":
                               prefix="val")
             metrics(cells_val, results_val, i)
             metrics.save_results(os.path.join(args.base_path, f"val_results_{i}.csv"), cells_val, results_val)
-            #  TODO uncooment to eval on the train as well
+            #  TODO uncomment to eval on the train as well
             # cells_train, results_train = val_epoch(model, train_loader_for_eval, device=device)
             #  metrics = Metrics(
             #     [],
