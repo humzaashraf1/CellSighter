@@ -10,6 +10,8 @@ from data.data import CellCropsDataset
 from data.transform import val_transform
 import cv2
 
+# Visualize cropped images in batch
+
 def extract_model_input_crops(config_path, output_dir, num_samples=None, random_seed=42):
     """
     Extract and save cropped images used as model inputs, along with additional outputs:
